@@ -1,5 +1,5 @@
 from typing import Optional
-
+import pandas as pd
 import exchange_calendars as xcals
 from datetime import date, datetime, timedelta,timezone
 from zoneinfo import ZoneInfo
@@ -9,17 +9,19 @@ def get_latest_market_date():
     calendar = xcals.get_calendar("XNYS")
 
     now = datetime.now(ZoneInfo("America/New_York"))
-    today = now.date()
+    today = pd.Timestamp(now.date())
 
     if calendar.is_session(today):
         close_time = calendar.session_close(today).to_pydatetime()
 
-        if now >= close_time:
-            return today
+        if now >= close_time.astimezone(
+            ZoneInfo("America/New_York")
+        ):
+            return today.date()
 
     previous_sessions = calendar.sessions_in_range(
-        today - timedelta(days=10),
-        today - timedelta(days=1),
+        today - pd.Timedelta(days=10),
+        today - pd.Timedelta(days=1),
     )
 
     return previous_sessions[-1].date()
