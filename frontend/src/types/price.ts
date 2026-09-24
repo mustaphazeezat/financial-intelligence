@@ -19,8 +19,8 @@ export interface PerformancePeriods {
 }
 
 export interface TradingActivity {
-  volume: number | null;
-  vwap: number | null;
+  volume?: number | null;
+  vwap?: number | null;
 }
 
 export interface CompanyPerformance {

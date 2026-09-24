@@ -2,7 +2,7 @@ import { formatCurrency, formatPercentage, formatVolume } from "@/lib/formater";
 import { CompanyPerformance } from "@/types/price";
 
 type PricePerformanceProps = {
-    data: CompanyPerformance;
+    data: CompanyPerformance | null ;
 };
 
 const periods = [
@@ -26,7 +26,7 @@ export default function PricePerformance({
 
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-1">
                     {periods.map(([label, key]) => {
-                        const value = data.performance?.[key];
+                        const value = data?.performance?.[key];
 
                         return (
                             <div
@@ -61,14 +61,14 @@ export default function PricePerformance({
                     <div className="flex items-center justify-between rounded-xl bg-gray-950 p-4">
                         <span className="text-sm text-gray-300">Volume</span>
                         <span className="font-semibold text-white">
-                            {formatVolume(data.trading_activity?.volume)}
+                            {formatVolume(data?.trading_activity?.volume)}
                         </span>
                     </div>
 
                     <div className="flex items-center justify-between rounded-xl bg-gray-950 p-4">
                         <span className="text-sm text-gray-300">VWAP</span>
                         <span className="font-semibold text-white">
-                            {formatCurrency(data.trading_activity?.vwap)}
+                            {formatCurrency(data?.trading_activity?.vwap)}
                         </span>
                     </div>
                 </div>

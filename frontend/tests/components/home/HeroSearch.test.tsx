@@ -57,8 +57,8 @@ describe("HeroSearch", () => {
     vi.clearAllMocks();
 
     vi.mocked(useRouter).mockReturnValue({
-      push: mockPush,
-    } as ReturnType<typeof useRouter>);
+        push: mockPush,
+    } as unknown as ReturnType<typeof useRouter>);
   });
 
   it("renders the search input", () => {

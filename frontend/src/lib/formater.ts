@@ -28,7 +28,7 @@ export function formatPercentage(value?: number | null): string {
     return `${sign}${abs.toFixed(2)}%`;
 }
 
-export function formatVolume(value: number | null): string {
+export function formatVolume(value?: number | null): string {
     if (value == null) return "—";
 
     return new Intl.NumberFormat("en-US").format(value);

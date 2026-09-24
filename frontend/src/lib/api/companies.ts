@@ -75,16 +75,14 @@ export async function getCompanyBySymbol(symbol?: string): Promise<Company | nul
   return data;
 }
 
-type IndustryData = {
-  "industries": Industry[]
-} 
 
-export async function getIndustries(): Promise<IndustryData> {
+
+export async function getIndustries(): Promise<Industry[]> {
     const url = `${API_URL}/api/v1/companies/industries`;
     const response = await fetch(url);
 
     if (response.status === 404) {
-        return {"industries": []};
+        return [];
     }
 
     if (!response.ok) {

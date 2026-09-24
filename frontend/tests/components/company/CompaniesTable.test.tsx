@@ -26,20 +26,25 @@ describe("CompaniesTable", () => {
     const companyData = {
         companies: [
             {
+                id: 1,
                 symbol: "AAPL",
-                company_name: "Apple Inc",
+                company_name: "Apple Inc.",
                 exchange: "NASDAQ",
                 sector_name: "Technology",
                 industry_name: "Consumer Electronics",
-                country: "United States",
+                country: "USA",
+                website: "",
+                description: ""
             },
-            {
+            {  id: 2,
                 symbol: "MSFT",
                 company_name: "Microsoft Corporation",
                 exchange: "NASDAQ",
                 sector_name: "Technology",
                 industry_name: "Software - Infrastructure",
                 country: "United States",
+                website: "",
+                description: ""
             },
         ],
         total: 2,
@@ -48,8 +53,8 @@ describe("CompaniesTable", () => {
     };
 
     const industryData = [
-        { sector_name: "Technology", industry_name: "Consumer Electronics" },
-        { sector_name: "Technology", industry_name: "Software - Infrastructure" },
+        {id: 1, sector_name: "Technology", industry_name: "Consumer Electronics" },
+        {id: 2, sector_name: "Technology", industry_name: "Software - Infrastructure" },
     ];
 
     beforeEach(() => {
@@ -59,7 +64,7 @@ describe("CompaniesTable", () => {
     it("calls getCompanies with the selected sector and current industry", async () => {
         vi.mocked(getCompanies).mockResolvedValue({
             companies: [companyData.companies[0]],
-            total: 1,
+            total: 2,
             current_page: 1,
             has_next_page: false,
         });
