@@ -2,8 +2,7 @@ import Link from "next/link";
 
 const navItems = [
   { label: "Overview", href: "/" },
-  { label: "Companies", href: "/companies" },
-  { label: "Market Movers", href: "/market" },
+  { label: "Companies", href: "/companies" }
 ];
 
 export default function Header() {
