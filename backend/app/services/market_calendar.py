@@ -9,23 +9,17 @@ def get_latest_market_date():
     calendar = xcals.get_calendar("XNYS")
 
     now = datetime.now(ZoneInfo("America/New_York"))
-
-    # Get today's date
     today = now.date()
 
-    # If today is a trading day and the market has closed
     if calendar.is_session(today):
-        close_time = calendar.session_close(
-            today
-        ).to_pydatetime()
+        close_time = calendar.session_close(today).to_pydatetime()
 
         if now >= close_time:
             return today
 
-    # Otherwise get the previous completed trading session
     previous_sessions = calendar.sessions_in_range(
         today - timedelta(days=10),
-        today
+        today - timedelta(days=1),
     )
 
     return previous_sessions[-1].date()
@@ -34,7 +28,9 @@ def should_check_for_new_quarter(latest_db_date: Optional[date], finance_type: s
     if latest_db_date is None:
         return True
     
-    today = date.today()
+    today = datetime.now(
+        ZoneInfo("America/New_York")
+    ).date()
     if finance_type == "quarter":
 
         # Determine the next quarter's first month
@@ -70,22 +66,23 @@ def should_check_for_new_quarter(latest_db_date: Optional[date], finance_type: s
 def seconds_until_market_close():
     nyse = xcals.get_calendar("XNYS")
 
-    now = datetime.now(timezone.utc)
-
+    now = datetime.now(ZoneInfo("America/New_York"))
     today = now.date()
 
-    # Is today a trading day?
     if not nyse.is_session(today):
         return None
 
-    schedule = nyse.schedule.loc[str(today)]
-    
-    market_close = schedule["close"]
+    market_close = nyse.session_close(today).to_pydatetime()
 
-    if now >= market_close:
-        return None
-
-    return int((market_close - now).total_seconds())
+    return max(
+        0,
+        int(
+            (
+                market_close.astimezone(ZoneInfo("America/New_York"))
+                - now
+            ).total_seconds()
+        ),
+    )
 
 def should_refresh_financial_data(last_updated, report_type):
     if last_updated is None:
