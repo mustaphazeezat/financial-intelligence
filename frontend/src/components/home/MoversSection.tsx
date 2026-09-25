@@ -16,7 +16,7 @@ function MoversSection({
   losers,
   mostActive,
 }: MoversSectionProps) {
-   console.log(gainers)
+
    const tableHeaders = (
         <thead className="border-b border-gray-700 bg-gray-800/70">
             <tr>
