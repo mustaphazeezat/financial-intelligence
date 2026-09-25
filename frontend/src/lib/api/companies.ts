@@ -27,7 +27,7 @@ export async function getCompanies(
         params.set("sector", sector.trim());
     }
 
-    const response = await fetch(`${API_URL}/api/v1/companies?${params.toString()}`);
+    const response = await fetch(`${API_URL}/api/v1/companies/?${params.toString()}`);
 
     if (!response.ok) {
         if (response.status === 404) {
